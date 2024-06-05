@@ -92,15 +92,13 @@
     window.TrackJS && TrackJS.install({ 
       token: "03cf1b4a7f3c4420bf4fd0ca3e1eaa59"
     });
-  </script>
-                        
-
+  </script>                    
   <script>
     class MishkaError extends Error {
       constructor(message) {
         super(message);
         this.message= message;
-        this.name = "CustomError"; 
+        this.name = "Custom Error"; 
       }
     }
     let form = document.querySelector('form');
@@ -111,6 +109,7 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      //TRY-CATCH
       try {
         if (operator == '/' && secondNum == 0) {
           throw new Error("Division by zero not allowed");
@@ -122,7 +121,7 @@
       finally{
         console.log("Make sure to never divide by zero!")
       }
-
+      //THROW-CUSTOM
       try{
         //console.log(typeof firstNum);
         if(firstNum == "100"){
@@ -160,7 +159,7 @@
       let firstNum = 2;
       let errorMsg = "The number does not equal to 3"
       if (firstNum!= 3){
-        console.assert(false, `number: ${firstNum}, errorMsg: ${errorMsg}`);
+        console.assert(false, `{number: ${firstNum}, errorMsg: ${errorMsg}}`);
       }
     });
 
@@ -173,10 +172,10 @@
       console.dir(button_for_dir);
     });
 
-    const xmlString = `<button>dirxml</button>`;
+    const xml_string = `<button>dirxml</button>`;
 
     document.getElementById('console-dirxml').addEventListener('click', () => {
-    console.dirxml(xmlString);
+    console.dirxml(xml_string);
     
     });
 
@@ -242,5 +241,4 @@
 
   </script>
 </body>
-
 </html>
