@@ -69,21 +69,21 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="console-log">Console Log</button>
+      <button id="console-err">Console Error</button>
+      <button id="console-count">Console Count</button>
+      <button id="console-warn">Console Warn</button>
+      <button id="console-assert">Console Assert</button>
+      <button id="console-clear">Console Clear</button>
+      <button id="console-dir">Console Dir</button>
+      <button id="console-dirxml">Console dirxml</button>
+      <button id="console-group-start">Console Group Start</button>
+      <button id="console-group-end">Console Group End</button>
+      <button id="console-table">Console Table</button>
+      <button id="start-timer">Start Timer</button>
+      <button id="end-timer">End Timer</button>
+      <button id="console-trace">Console Trace</button>
+      <button id="global-error">Trigger a Global Error</button>
     </section>
   </main>
 
@@ -96,12 +96,119 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        if (operator == '/' && secondNum == 0) {
+          throw new Error('Division by zero not allowed');
+        } 
+      }
+      catch (err) {
+        console.log('Error:' + err.message);
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    document.getElementById('console-log').addEventListener('click',() => {
+      console.log("Console Log Demo")
+    });
+
+    document.getElementById('console-err').addEventListener('click', () => {
+      console.error('Console Error Demo');
+    });
+
+    document.getElementById('console-count').addEventListener('click', () => {
+      console.count('Count Button');
+    });
+
+    document.getElementById('console-warn').addEventListener('click', () => {
+      console.warn('Console Warn Button');
+    });
+
+    document.getElementById('console-assert').addEventListener('click', () => {
+      let firstNum = 2;
+      let errorMsg = "The number does not equal to 3"
+      if (firstNum!= 3){
+        console.assert(false, `number: ${firstNum}, errorMsg: ${errorMsg}`);
+      }
+    });
+
+    document.getElementById('console-clear').addEventListener('click', () => {
+      console.clear();
+    });
+
+    document.getElementById('console-dir').addEventListener('click', () => {
+      const button_for_dir = document.querySelector('button');
+      console.dir(button_for_dir);
+    });
+
+    const xmlString = `<button>dirxml</button>`;
+
+    document.getElementById('console-dirxml').addEventListener('click', () => {
+    console.dirxml(xmlString);
+    
+    });
+
+    document.getElementById('console-group-start').addEventListener('click', () => {
+      console.group('console.group');
+    });
+
+    document.getElementById('console-group-end').addEventListener('click', () => {
+      console.groupEnd('console.group');
+    });
+
+    const entries = [
+    { name: 'Software Engineering', num: 110 },
+    { name: 'Programming Languages', num: 130 },
+    { name: 'Advanced Software Engineering', num: 112 },
+    ];
+
+    document.getElementById('console-table').addEventListener('click', () => {
+      console.table(entries);
+    });
+
+    document.getElementById('console-group-end').addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+
+    let start_time;
+    document.getElementById('start-timer').addEventListener('click', () => {
+      start_time = performance.now();
+    });
+
+    document.getElementById('end-timer').addEventListener('click', () => {
+      const end_time = performance.now();
+      console.log(`Timer Button: ${(end_time - start_time)} ms`);
+      start_time = null;
+  });
+
+    function handleButtonClick() {
+      deep()
+    }
+    function deep(){
+      deeper()
+    }
+    function deeper(){
+      deepest()
+
+    }
+    function deepest(){
+      console.trace("console.trace")
+    }
+
+    document.getElementById('console-trace').addEventListener('click', handleButtonClick);
+
+    window.onerror = function(event, source, lineno, colno, error) {
+      console.log("Global Error:", event);
+      console.log("Source:", source);
+      console.log("Line:", lineno);
+      console.log("Column:", colno);
+      console.log("Error Object:", error);
+    }
+    document.getElementById('global-error').addEventListener('click', () => {
+      throw new Error('This is a global error');
+    });
+
   </script>
 </body>
 
