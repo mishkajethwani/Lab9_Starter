@@ -87,7 +87,22 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "03cf1b4a7f3c4420bf4fd0ca3e1eaa59"
+    });
+  </script>
+                        
+
+  <script>
+    class MishkaError extends Error {
+      constructor(message) {
+        super(message);
+        this.message= message;
+        this.name = "CustomError"; 
+      }
+    }
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -98,12 +113,29 @@
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
       try {
         if (operator == '/' && secondNum == 0) {
-          throw new Error('Division by zero not allowed');
+          throw new Error("Division by zero not allowed");
         } 
       }
       catch (err) {
-        console.log('Error:' + err.message);
+        console.log("Error is :"+ err.message);
       }
+      finally{
+        console.log("Make sure to never divide by zero!")
+      }
+
+      try{
+        //console.log(typeof firstNum);
+        if(firstNum == "100"){
+          throw new MishkaError("You have the first number as 100, which is a dummy error");
+        }
+      }
+        catch (err){
+          console.log("Error is :" + err.message);
+        }
+        finally{
+          console.log("Finally for custom error");
+        }
+
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
@@ -169,7 +201,6 @@
     document.getElementById('console-group-end').addEventListener('click', () => {
       console.groupEnd();
     });
-
 
     let start_time;
     document.getElementById('start-timer').addEventListener('click', () => {
